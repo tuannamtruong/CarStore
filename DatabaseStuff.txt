@@ -9,10 +9,11 @@ dotnet ef migrations add <Name>
 ApplicationDbContext context = app.ApplicationServices.GetRequiredService<ApplicationDbContext>();
 context.Database.Migrate();
 			
-Create new migration for database <NEWDB>
-dotnet ef migrations add Initial --context <NEWDB>
+New DbContext
+Create new migration for database <NEWDBContext>
+dotnet ef migrations add Initial --context <NEWDBContext>
 After EF Core generate the initial migration, create the database and run the migration commands
-dotnet ef database update --context <NEWDB>
+dotnet ef database update --context <NEWDBContext>
 
 
 

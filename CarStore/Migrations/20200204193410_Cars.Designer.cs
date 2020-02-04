@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CarStore.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200115082643_Orders")]
-    partial class Orders
+    [Migration("20200204193410_Cars")]
+    partial class Cars
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -27,9 +27,11 @@ namespace CarStore.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Category");
+                    b.Property<string>("Category")
+                        .IsRequired();
 
-                    b.Property<string>("Name");
+                    b.Property<string>("Name")
+                        .IsRequired();
 
                     b.Property<decimal>("Price");
 
@@ -72,6 +74,8 @@ namespace CarStore.Migrations
                         .IsRequired();
 
                     b.Property<bool>("IsGiftWrap");
+
+                    b.Property<bool>("IsShipped");
 
                     b.Property<string>("Line1")
                         .IsRequired();
