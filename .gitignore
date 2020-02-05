@@ -1,5 +1,6 @@
 #ConnectionString
 CarStore/appsettings.json
+CarStore/appsettings.production.json
 
 # User-specific files
 *.rsuser

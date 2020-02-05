@@ -33,10 +33,17 @@ namespace CarStore
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            app.UseDeveloperExceptionPage();
+            if (env.IsDevelopment())
+            {
+                app.UseDeveloperExceptionPage();
+                app.UseStatusCodePages();
+            }
+            else
+            {
+                app.UseExceptionHandler("/Error");
+            }
             app.UseAuthentication();
             app.UseStaticFiles();
-            app.UseStatusCodePages();
             app.UseSession();
             app.UseMvc(routes =>
             {
@@ -58,8 +65,8 @@ namespace CarStore
                     defaults: new { Controller = "Car", action = "List", currentPage = 1 });
                 routes.MapRoute(name: null, template: "{controller}/{action}/{id?}");
             });
-            SeedData.EnsurePopulated(app);
-            IdentitySeedData.EnsurePopulated(app);
+            //SeedData.EnsurePopulated(app);
+            //IdentitySeedData.EnsurePopulated(app);
         }
     }
 }
