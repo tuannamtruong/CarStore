@@ -1,4 +1,5 @@
-﻿using CarStore.Models;
+﻿using CarStore.Infrastructure;
+using CarStore.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -18,6 +19,7 @@ namespace CarStore
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSingleton<UptimeService>();
             services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration["Data:CarStoreRepo:ConnectionString"]));
             services.AddDbContext<AppIdentityDbContext>(options => options.UseSqlServer(Configuration["Data:CarStoreIdentity:ConnectionString"]));
             services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<AppIdentityDbContext>().AddDefaultTokenProviders();

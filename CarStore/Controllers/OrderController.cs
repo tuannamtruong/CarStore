@@ -41,7 +41,7 @@ namespace CarStore.Controllers
         [HttpPost]
         public IActionResult Checkout(Order order)
         {
-            if (cart.GetPickedItems.Count() == 0)
+            if (!cart.GetPickedItems.Any())
                 ModelState.AddModelError("", "Your shop cart is empty :(.");
             if (ModelState.IsValid)
             {
