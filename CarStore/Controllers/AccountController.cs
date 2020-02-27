@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using CarStore.Models;
 using CarStore.Models.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -15,6 +16,7 @@ namespace CarStore.Controllers
         {
             userManager = userMgr;
             signInManager = signInMgr;
+            IdentitySeedData.EnsurePopulated(userMgr).Wait();
         }
         [AllowAnonymous]
         public ViewResult Login(string returnUrl)

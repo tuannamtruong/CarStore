@@ -65,8 +65,6 @@ namespace CarStore
                     defaults: new { Controller = "Car", action = "List", currentPage = 1 });
                 routes.MapRoute(name: null, template: "{controller}/{action}/{id?}");
             });
-            //SeedData.EnsurePopulated(app);
-            //IdentitySeedData.EnsurePopulated(app);
         }
     }
 }

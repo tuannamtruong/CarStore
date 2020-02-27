@@ -1,16 +1,18 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using System;
 using System.Linq;
 
 namespace CarStore.Models
 {
     public static class SeedData
     {
-        public static void EnsurePopulated(IApplicationBuilder app)
+        public static void EnsurePopulated(IServiceProvider services)   
         {
-            ApplicationDbContext context = app.ApplicationServices.GetRequiredService<ApplicationDbContext>();
-            context.Database.Migrate(); 
+            ApplicationDbContext context = services.GetRequiredService<ApplicationDbContext>();
+            //ApplicationDbContext context = app.ApplicationServices.GetRequiredService<ApplicationDbContext>();
+            //context.Database.Migrate();
             if (!context.Cars.Any())
             {
                 context.Cars.AddRange(

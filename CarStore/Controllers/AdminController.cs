@@ -39,5 +39,12 @@ namespace CarStore.Controllers
                 TempData["message"] = $"{car.Name} is succesfully deleted";
             return RedirectToAction("Index");
         }
+
+        [HttpPost]
+        public IActionResult SeedDatabase()
+        {
+            SeedData.EnsurePopulated(HttpContext.RequestServices);
+            return RedirectToAction(nameof(Index));
+        }
     }
 }
