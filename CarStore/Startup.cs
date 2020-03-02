@@ -1,4 +1,5 @@
 ﻿using CarStore.Infrastructure;
+using CarStore.Infrastructure.Middleware;
 using CarStore.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -44,6 +45,7 @@ namespace CarStore
             {
                 app.UseExceptionHandler("/Error");
             }
+            app.UseMiddleware<TestMiddleware>();
             app.UseAuthentication();
             app.UseStaticFiles();
             app.UseSession();
