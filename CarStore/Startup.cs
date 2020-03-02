@@ -38,14 +38,14 @@ namespace CarStore
         {
             if (env.IsDevelopment())
             {
+                app.UseMiddleware<TestMiddleware>();
                 app.UseDeveloperExceptionPage();
                 app.UseStatusCodePages();
             }
             else
             {
-                app.UseExceptionHandler("/Error");
+                app.UseExceptionHandler("/Error/Index");
             }
-            app.UseMiddleware<TestMiddleware>();
             app.UseAuthentication();
             app.UseStaticFiles();
             app.UseSession();

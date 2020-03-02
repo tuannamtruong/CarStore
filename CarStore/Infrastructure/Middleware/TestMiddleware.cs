@@ -15,7 +15,7 @@ namespace CarStore.Infrastructure.Middleware
             if (httpContext == null) throw new ArgumentNullException(nameof(httpContext), "Missing httpContext");
             if (httpContext.Request.Path.ToString().ToUpperInvariant() == "/MIDDLEWARE")
             {
-                await httpContext.Response.WriteAsync("This is from the content middleware", Encoding.UTF8).ConfigureAwait(true);
+                await httpContext.Response.WriteAsync("Middleware is here", Encoding.UTF8).ConfigureAwait(true);
             }
             else
             {

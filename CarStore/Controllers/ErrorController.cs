@@ -8,6 +8,6 @@ namespace CarStore.Controllers
 {
     public class ErrorController : Controller
     {
-        public ViewResult Error() => View();
+        public ViewResult Index() => View();
     }
 }
