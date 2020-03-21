@@ -20,6 +20,7 @@ namespace CarStore.Controllers
         /// Showing items in the cart
         /// </summary>
         /// <param name="returnUrl">State of cart after a modification</param>
+        [Route("MyCart")]
         public ViewResult Index(string returnUrl)
         {
             return View(new CartIndexViewModel
