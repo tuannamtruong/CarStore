@@ -43,7 +43,7 @@ namespace CarStore.Controllers
         [HttpPost]
         public IActionResult SeedDatabase()
         {
-            SeedData.EnsurePopulated(HttpContext.RequestServices);
+            //SeedData.EnsurePopulated(HttpContext.RequestServices);
             return RedirectToAction(nameof(Index));
         }
     }

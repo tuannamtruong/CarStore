@@ -1,6 +1,7 @@
 ﻿using CarStore.Infrastructure;
 using CarStore.Infrastructure.Middleware;
 using CarStore.Models;
+using CarStore.POCO;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -8,6 +9,10 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Newtonsoft.Json;
+using System;
+using System.Net.Http;
+using System.Threading.Tasks;
 
 namespace CarStore
 {
@@ -21,13 +26,31 @@ namespace CarStore
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSingleton<UptimeService>();
-            services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration["Data:CarStoreRepo:ConnectionString"]));
             services.AddDbContext<AppIdentityDbContext>(options => options.UseSqlServer(Configuration["Data:CarStoreIdentity:ConnectionString"]));
             services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<AppIdentityDbContext>().AddDefaultTokenProviders();
             services.AddTransient<ICarRepository, EFCarRepository>();
             services.AddTransient<IOrderRepository, EFOrderRepository>();
             services.AddScoped<Cart>(sp => SessionCart.GetCart(sp));                // When an object with datatype Cart is asked, the session will provide an session cart object.
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            try
+            {
+                var builder = new UriBuilder("http://localhost:8080/health/");
+                var uri = builder.Uri;
+
+                using (var client = new HttpClient())
+                {
+                    Task<HttpResponseMessage> taskResponse = Task.Run(() => client.GetAsync(uri));
+                    var response = taskResponse.Result;
+                    Task<string> taskResponseBody = Task.Run(() => response.Content.ReadAsStringAsync());
+                    string responseBody = taskResponseBody.Result;
+                    var respond = JsonConvert.DeserializeObject<HealthResponse>(responseBody);
+                }
+            }
+            catch (Exception e)
+            //catch (HttpRequestException e )
+            {
+            }
+            services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration["Data:CarStoreRepo:ConnectionString"]));
             services.AddMvc();
             services.AddMemoryCache();
             services.AddSession();
@@ -51,6 +74,10 @@ namespace CarStore
             app.UseSession();
             app.UseMvc(routes =>
             {
+                routes.MapRoute(
+                    name: default,
+                    template: "{controller}/{action}",
+                    defaults: new { Controller = "Test", action = "Index" });
                 routes.MapRoute(
                     name: null,
                     template: "{currentCategory}/Page{currentPage}",

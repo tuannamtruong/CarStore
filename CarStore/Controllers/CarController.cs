@@ -2,6 +2,7 @@
 using CarStore.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 
 namespace CarStore.Controllers
@@ -17,23 +18,23 @@ namespace CarStore.Controllers
         }
 
         public ViewResult List(string currentCategory, int currentPage = 1)
-            => View(new CarListViewModel()
+        {
+            return View(new CarListViewModel()
             {
                 Cars = repository.Cars
-                .Where(c => c.Category == currentCategory || currentCategory == null)
-                .OrderBy(c => c.CarId)
-                .Skip((currentPage - 1) * Pagesize)
-                .Take(Pagesize),
+                           .Where(c => c.Category == currentCategory || currentCategory == null)
+                           .OrderBy(c => c.CarId)
+                           .Skip((currentPage - 1) * Pagesize)
+                           .Take(Pagesize),
                 PagingInfo = new PagingInfo()
                 {
                     ItemsPerPage = Pagesize,
                     CurrentPage = currentPage,
                     AmountItem = currentCategory == null ? repository.Cars.Count() :
-                    repository.Cars.Where(c => c.Category == currentCategory).Count(),
+                               repository.Cars.Where(c => c.Category == currentCategory).Count(),
                 },
                 CurrentCategory = currentCategory,
             });
-
-
+        }
     }
 }
