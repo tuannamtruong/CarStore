@@ -32,24 +32,6 @@ namespace CarStore
             services.AddTransient<IOrderRepository, EFOrderRepository>();
             services.AddScoped<Cart>(sp => SessionCart.GetCart(sp));                // When an object with datatype Cart is asked, the session will provide an session cart object.
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-            try
-            {
-                var builder = new UriBuilder("http://localhost:8080/health/");
-                var uri = builder.Uri;
-
-                using (var client = new HttpClient())
-                {
-                    Task<HttpResponseMessage> taskResponse = Task.Run(() => client.GetAsync(uri));
-                    var response = taskResponse.Result;
-                    Task<string> taskResponseBody = Task.Run(() => response.Content.ReadAsStringAsync());
-                    string responseBody = taskResponseBody.Result;
-                    var respond = JsonConvert.DeserializeObject<HealthResponse>(responseBody);
-                }
-            }
-            catch (Exception e)
-            //catch (HttpRequestException e )
-            {
-            }
             services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration["Data:CarStoreRepo:ConnectionString"]));
             services.AddMvc();
             services.AddMemoryCache();

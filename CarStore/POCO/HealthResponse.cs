@@ -4,14 +4,14 @@ namespace CarStore.POCO
 {
     public class HealthResponse
     {
-        public string status { get; set; }
-        public List<Check> checks { get; set; }
+        public string Status { get; set; }
+        public List<Check> Checks { get; set; }
     }
 
     public class Check
     {
-        public string name { get; set; }
-        public string status { get; set; }
+        public string Name { get; set; }
+        public string Status { get; set; }
     }
 
 }
